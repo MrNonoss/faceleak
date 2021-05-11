@@ -8,3 +8,5 @@ Le docker-compose met en place:
 - Et enfin un PHP
 
 Le script contenu dans le répertoire HTML requête deux tables: "france" et "monde" qui seront a créer et dont les colonnes sont "phone", "id, "name" et "surname".
+
+![](recording.gif)
