@@ -1,0 +1,47 @@
+version: '3.6'
+services:
+
+  postgre:
+    image: postgres:alpine
+    container_name: postgre
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD/data:/tmp/data
+      - $PWD/databases:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: example
+      POSTGRES_DB: faceleak
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "2019:2019"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD/conf/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/html:/srv
+      - $PWD/conf/caddy_data:/data
+      - $PWD/conf/caddy_config:/config
+      - $PWD/logs:/var/log/caddy
+
+  php:
+    image: mrnonoss/php8.0.5-pdo-pgsql
+    container_name: php
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./html:/srv
+      - ./conf/php.ini:/usr/local/etc/php/php.ini:ro
