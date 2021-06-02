@@ -110,7 +110,7 @@ if (isset($_GET["search"])) {
 		  }
 	  }
 	  
-	  if (is_countable($alerting > 0)) {
+	  if (count($alerting) > 0) {
 			$result ='';
 			foreach($alerting as $value) {
 				$result .= '<div class="alerting">'.$value.'</div>';
